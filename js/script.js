@@ -15,7 +15,13 @@ createApp({
     methods: {
         readList() {
             axios.get(this.apiUrl).then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
+                this.tasks = res.data;
+                console.log(this.tasks);
+            }).catch((error) => {
+                console.log(error)
+            }).finally(() => {
+
             })
         },
 
@@ -60,5 +66,8 @@ createApp({
                 }
             })
         }
+    },
+    mounted() {
+        this.readList();
     }
 }).mount('#app')
