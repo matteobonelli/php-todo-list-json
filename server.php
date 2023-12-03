@@ -7,7 +7,7 @@ $list = json_decode($filecontent, true);
 
 //var_dump($list);
 
-if (isset($_POST['text']) && isset($_POST['done']) && isset($_POST['id'])) {
+if (isset($_POST['text']) && isset($_POST['done'])) {
     $isFalse = true;
     if ($_POST['done'] === 'false') {
         $isFalse = false;
@@ -15,7 +15,6 @@ if (isset($_POST['text']) && isset($_POST['done']) && isset($_POST['id'])) {
     $newObj = (object) [
         'text' => $_POST['text'],
         'done' => $isFalse,
-        'id' => intval($_POST['id']),
     ];
     array_push($list, $newObj);
     file_put_contents('todo-list.json', json_encode($list));
@@ -24,6 +23,12 @@ if (isset($_POST['text']) && isset($_POST['done']) && isset($_POST['id'])) {
 if (isset($_POST['index'])) {
     $index = $_POST['index'];
     $list[$index]['done'] = !$list[$index]['done'];
+    file_put_contents('todo-list.json', json_encode($list));
+}
+
+if (isset($_POST['index-remove'])) {
+    $index = $_POST['index-remove'];
+    array_splice($list, $index, 1);
     file_put_contents('todo-list.json', json_encode($list));
 }
 

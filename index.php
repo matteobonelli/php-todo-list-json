@@ -31,9 +31,9 @@
                         v-for="(task, index) in listFiltered"
                         :class="{'list-group-item-success' : task.done}, {'list-group-item-danger' : !task.done}"
                         :key="task.id">
-                        <div @click="taskCrossedOut(task.id) /*task.done = !task.done*/" :style="'cursor : pointer'"
+                        <div @click="taskCrossedOut(index) /*task.done = !task.done*/" :style="'cursor : pointer'"
                             :class="{'crossedOut' : task.done}">{{task.text}}</div>
-                        <div :style="'cursor : pointer'" class="d-flex align-items-center" @click="removeItem(task.id)">
+                        <div :style="'cursor : pointer'" class="d-flex align-items-center" @click="removeItem(index)">
                             <i class="fa-solid fa-xmark"></i>
                         </div>
                     </li>
