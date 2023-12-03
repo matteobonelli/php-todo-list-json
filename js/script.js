@@ -9,7 +9,8 @@ createApp({
             apiUrl: 'server.php',
             idLast: 0,
             inputText: '',
-            inputSelect: ''
+            inputSelect: '',
+            crossedIndex: '',
         }
     },
     methods: {
@@ -21,8 +22,9 @@ createApp({
             }).catch((error) => {
                 console.log(error)
             }).finally(() => {
-                this.idLast = this.tasks.length;
+
             })
+            this.idLast = this.tasks.length;
         },
 
         indexFinder(id) {
@@ -48,16 +50,25 @@ createApp({
                 }).catch((error) => {
                     console.log(error);
                 }).finally(() => {
-
+                    this.readList();
                 })
-                this.readList();
+
                 this.inputText = ''
             }
 
         },
         taskCrossedOut(id) {
             const index = this.indexFinder(id)
-            this.tasks[index].done = !this.tasks[index].done
+            const data = new FormData();
+            data.append("index", index);
+            console.log(index);
+            axios.post(this.apiUrl, data).then((res) => {
+                // console.log(res.data);
+                this.todoList = res.data;
+            }).finally(() => {
+                this.readList();
+            })
+
         },
 
     },
