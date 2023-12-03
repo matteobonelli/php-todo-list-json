@@ -42,7 +42,15 @@ createApp({
                     text: this.inputText,
                     done: false,
                     id: this.idLast
-                }
+                };
+                axios.post(this.apiUrl, newObj, { headers: { "Content-Type": "multipart/form-data" } }).then((res) => {
+                    console.log(res.data);
+                    this.todoList = res.data;
+                }).catch((error) => {
+                    console.log(error);
+                }).finally(() => {
+
+                })
                 this.tasks.unshift(newObj);
                 this.inputText = ''
             }
