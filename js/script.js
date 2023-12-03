@@ -7,7 +7,7 @@ createApp({
         return {
             tasks: [],
             apiUrl: 'server.php',
-            idLast: 4,
+            idLast: 0,
             inputText: '',
             inputSelect: ''
         }
@@ -21,7 +21,7 @@ createApp({
             }).catch((error) => {
                 console.log(error)
             }).finally(() => {
-
+                this.idLast = this.tasks.length;
             })
         },
 
@@ -38,20 +38,19 @@ createApp({
                 return
             } else {
                 this.idLast++
-                const newObj = {
-                    text: this.inputText,
-                    done: false,
-                    id: this.idLast
-                };
-                axios.post(this.apiUrl, newObj, { headers: { "Content-Type": "multipart/form-data" } }).then((res) => {
-                    console.log(res.data);
+                const data = new FormData();
+                data.append("text", this.inputText);
+                data.append("done", false);
+                data.append("id", this.idLast);
+                axios.post(this.apiUrl, data).then((res) => {
+                    console.log(res);
                     this.todoList = res.data;
                 }).catch((error) => {
                     console.log(error);
                 }).finally(() => {
 
                 })
-                this.tasks.unshift(newObj);
+                this.readList();
                 this.inputText = ''
             }
 
